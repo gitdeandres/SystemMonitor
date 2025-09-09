@@ -236,7 +236,7 @@ class SystemMonitor {
     this.intervalId = window.setInterval(() => {
       logDebug('[Scheduler] Ejecutando verificación horaria');
       checkAndSend();
-    }, 1 * 60 * 1000); // 1 hora
+    }, 60 * 60 * 1000); // 1 hora
     
     logInfo('[Scheduler] ✅ Scheduler diario configurado (verificación cada hora)');
   }
