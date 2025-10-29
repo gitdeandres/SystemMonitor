@@ -278,7 +278,7 @@ async fn get_activation_status() -> Result<String, Box<dyn std::error::Error>> {
 
     #[cfg(target_os = "windows")]
     let output = Command::new("powershell")
-        .args(["-Command", "Get-WmiObject -Class SoftwareLicensingProduct | Where-Object {$_.PartialProductKey} | Select-Object -ExpandProperty LicenseStatus"])
+        .args(["-Command", "Get-WmiObject -Class SoftwareLicensingProduct | Where-Object {$_.PartialProductKey -and $_.Name -like '*Windows*'} | Select-Object -ExpandProperty LicenseStatus"])
         .creation_flags(0x08000000) // CREATE_NO_WINDOW
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
