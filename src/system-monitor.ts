@@ -1,3 +1,4 @@
+import { getVersion } from '@tauri-apps/api/app';
 import { invoke } from '@tauri-apps/api/core'
 import { 
   info as logInfo, 
@@ -123,6 +124,10 @@ class SystemMonitor {
   // Enviar datos a la API externa
   async sendToAPI(data: CompleteSystemData): Promise<void> {
     await logInfo('[ApiClient] 📡 Iniciando petición POST a API');
+
+    // Obtener versión dinámicamente
+    const clientVersion = await getVersion();
+    await logDebug(`[ApiClient] Versión del cliente: ${clientVersion}`);
     
     await logDebug('[ApiClient] Preparando payload de la petición');
     const payload = {
@@ -134,7 +139,7 @@ class SystemMonitor {
         activation_status: data.activation_status,
         timestamp: data.timestamp
       },
-      client_version: '1.0.0',
+      client_version: clientVersion,
       report_type: 'daily_system_check'
     };
     const payloadString = JSON.stringify(payload);
